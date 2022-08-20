@@ -19,9 +19,7 @@ const ViewBook = ()=>{
     const book = books.find((book)=> book.id == id);
 
     return (
-        <>
-            <BigBook book={book} />
-        </>
+        <BigBook book={book} />
     )
 }
 
