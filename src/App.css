@@ -1,0 +1,49 @@
+html, body, #root {
+    min-height: 100vh;
+}
+#root {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr;
+}
+
+#books-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0 1rem;
+    width: max-content;
+    margin: 0 auto;
+}
+.book-card {
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
+    width: 100%;
+}
+
+#alert-box {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, 0);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.center-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 1130px) {
+    #books-wrapper {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width: 760px) {
+    #books-wrapper {
+        grid-template-columns: 1fr;
+    }
+}

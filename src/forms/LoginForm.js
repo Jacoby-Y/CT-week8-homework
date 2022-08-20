@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
 import Button from "../components/Button";
+import userApi from "../api/user.js";
+import { CancelToken } from "apisauce";
+import { AppContext } from "../context/AppContext"
 
 const FormSchema = Yup.object({
     email: Yup.string().email("Must be a valid e-mail format").required(),
@@ -16,8 +19,13 @@ const initialValues = {
 
 
 export default function LoginForm() {
-    const handleSubmit = (values) => {
-        console.log(values)
+    const { setUser, setAlerts } = useContext(AppContext);
+
+    const handleSubmit = async ({ email, password }) => {
+        const source = CancelToken.source();
+        const res = await userApi.login(email, password, source.token);
+        if (res.error) return setAlerts({ theme: "error", text: "Can't login!" });
+        setUser(res.user);
     }
 
     const formik = useFormik({

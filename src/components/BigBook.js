@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
-const BookInfo = ({ book }) => {
+const BigBook = ({ book }) => {
     const { savedBooks, dispatchSavedBooks } = useContext(AppContext);
     const [view, setView ] = useState(false);
     
@@ -27,10 +27,11 @@ const BookInfo = ({ book }) => {
     if (view) return (<Navigate to={`/book/${id}`} />)
 
     return (
-        <Card sx={{ maxWidth: 345, mb: 2.5, border: "3px solid #1976D2", mx: "auto", }} className="book-card">
+        <Card sx={{ maxWidth: "80%", height: "100%", mb: 2.5, border: "3px solid #1976D2", mx: "auto", }} className="book-card">
             <CardMedia
                 component="img"
-                height="200"
+                height="100%"
+                sx={{maxHeight: "80vh"}}
                 image={img ?? "https://images-na.ssl-images-amazon.com/images/I/51RjYy9XU9L.jpg"}
                 alt="Book Photo"
                 loading="lazy"
@@ -62,4 +63,4 @@ const BookInfo = ({ book }) => {
     );
 }
 
-export default BookInfo;
+export default BigBook;

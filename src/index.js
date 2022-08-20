@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import AppContextProvider from "./context/AppContext"
 
 ///// I can't get themes to work
 // import { createTheme, colors, ThemeProvider } from "@mui/material";
@@ -12,11 +14,13 @@ import App from "./App";
 //     },
 // });
 
-ReactDOM.render(
-    (
-        // <ThemeProvider theme={theme}>
-            <App />
-        // </ThemeProvider>
-    ),
-    document.getElementById("root")
-)
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <React.StrictMode>
+        <AppContextProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </AppContextProvider>
+    </React.StrictMode>
+);

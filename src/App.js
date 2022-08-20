@@ -1,35 +1,50 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { 
-    // Typography,
-    // AppBar,
-    // Card,
-    // CardAction,
-    // CardContent,
-    // CardMedia,
-    // Grid,
-    // Toolbar,
     CssBaseline,
     Container } from "@mui/material";
 import BookInfo from "./components/BookInfo";
 import NavBar from "./components/NavBar";
-import LoginForm from "./forms/LoginForm";
-import Register from "./forms/RegisterForm";
+import { Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import Login from "./pages/Login";
+import Books from "./pages/Books";
+import Register from "./pages/Register";
+import EditProfile from "./pages/EditProfile";
+import { AppContext } from "./context/AppContext";
+import { Navigate } from "react-router-dom";
+import Alert from "./components/Alert";
+import ViewBook from "./pages/ViewBook";
+
+const Logout = ()=>{
+    const { setUser } = useContext(AppContext);
+    
+    setUser(null);
+}
 
 const App = ()=>{
+    const { user } = useContext(AppContext);
+
     return (
         <>
         <CssBaseline />
         <NavBar />
-        <main style={{paddingBottom: "5rem"}}>
-            <div>
-                <Container maxWidth="sm">
-                    {/* <BookInfo /> */}
-                    {/* <LoginForm /> */}
-                    {/* <Register /> */}
-                    <Register editting={true} />
-                </Container>
-            </div>
-        </main>
+        <Alert />
+        <Container maxWidth="lg">
+            <Routes>
+                <Route path="/" element={<Index />} />
+                {user && <>
+                    <Route path="/editprofile" element={<EditProfile />} />
+                    <Route path="/books" element={<Books userBooks={false} />} />
+                    <Route path="/userbooks" element={<Books userBooks={true} />} />
+                    <Route path="/book/:id" element={<ViewBook />} />
+                </>}
+                {!user && <>
+                    <Route path="/register" element={<Register />} />
+                </> }
+                <Route path="/login" element={!user ? <Login /> : <Navigate to='/' />} />
+                <Route path="/logout" element={user ? <Logout /> : <Navigate to='/login' />} />
+            </Routes>
+        </Container>
         </>
     );
 }
